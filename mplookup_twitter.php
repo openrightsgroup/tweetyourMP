@@ -74,16 +74,29 @@ $senderpostcode2 = preg_replace( $sPattern, $sReplace, $senderpostcode );
 // send the query to theyworkforyou.com (twfy)
 
  
-$mps = $twfyapi->query('getConstituency', array('output' => 'php', 'postcode' => $senderpostcode2));
+$mps = $twfyapi->query('getMP', array('output' => 'php', 'postcode' => $senderpostcode2));
 
 // the next bit sorts the data you get back from twfy. It's not very elegant and could probably be done
 // by sorting out the array - but it works. Will try and make it better later.
 
-$pieces = explode(";", $mps);
-//$constituency_data=$pieces[11]; // get the constituency name from the list of other stuff provided
-$constituency_data=$pieces[7]; // get the constituency name from the list of other stuff provided
-preg_match('/"([^"]+)"/', $constituency_data, $constituency_name); // get rid of the other bits
-$constituency_name=$constituency_name[1]; // turn it into a simple string
+$twfy_data = unserialize($mps);
+$constituency_name = $twfy_data["constituency"];
+
+$mpfullname = $twfy_data["full_name"];
+
+## TODO make this a proper function
+## API details here http://explore.data.parliament.uk/?learnmore=Members
+$parl = curl_init();
+curl_setopt($parl, CURLOPT_USERAGENT, 'https://github.com/openrightsgroup/tweetyourMP');
+curl_setopt($parl, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($parl, CURLOPT_FOLLOWLOCATION, true);
+$url = "http://lda.data.parliament.uk/members.json" . "?fullName=" . urlencode($mpfullname);
+curl_setopt($parl, CURLOPT_URL, $url);
+$result = curl_exec($parl);
+$parl_data = json_decode($result)->result->items[0];
+## TODO blithly assumes that the first result is correct - two MPs with the same name will break it
+$mptwitter = str_replace("https://twitter.com/","",$parl_data->twitter->_value);
+## TODO assumes a specific format for the twitter url
 
 // display the page header from actionsettings.php
 
@@ -108,26 +121,14 @@ echo "<h2>Your constituency is $constituency_name </h2>";
 
 // now to lookup the MP's details from the database
 
-$link_id = mysql_connect($dbhost, $dbuser, $dbpass);
-mysql_select_db($dbname, $link_id) or die(mysql_error());
-
-
-$result = mysql_query("SELECT * FROM $mpdata WHERE constituency='$constituency_name' ");
-
 // and to turn those results into lovely strings
 
-$row = mysql_fetch_assoc($result);
-
-$mptitle = $row['title'];
-$mpfirstname = $row['firstname'];
-$mpsecondname = $row['secondname'];
-$mpemail = $row['email (parliament)'];
-$mpemail2 = $row['alt email'];
-$mptwitter = $row['twitter'];	
-$mpphone = $row['phone'];	
-$mpparty = $row['party'];
-$twfypage = $row['twfypage'];
-$mphomepage = $row['homepage'];	
+$mptitle = "";
+$mpfirstname = $twfy_data["given_name"];
+$mpsecondname = $twfy_data["family_name"];
+$twfypage = "http://www.theyworkforyou.com" . $twfy_data["url"];
+$mphomepage = (string)$parl_data->homePage ;
+$mpparty = $twfy_data["party"];
 
 echo "<fieldset><legend>Your MP info</legend>";
 echo "<p>$mptitle $mpfirstname $mpsecondname $mpparty</p>";
@@ -185,4 +186,3 @@ echo '</fieldset><p><a href="index.html">Start again</a>';
 
 echo $footer_template;
 
-?> 

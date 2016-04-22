@@ -5,19 +5,6 @@
 
 $youremail = 'email';
 
-// your database settings (for the lookup)
-
-$dbhost = 'database host';
-
-$dbuser = 'database username';
-$dbname = 'database nane';
-
-$dbpass = 'database password';
-
-// name of your MP data table 
-
-$mpdata = 'mp data table name';
-
 // TheyWorkForYou.com API key
 
 $twfykey='theyworkforyou.com API key';
@@ -47,4 +34,3 @@ $header_template='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 
 $footer_template='</div></div></body></html>';
 
-?>  
