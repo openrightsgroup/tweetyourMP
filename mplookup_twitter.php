@@ -133,15 +133,16 @@ $twfypage = "http://www.theyworkforyou.com" . $twfy_data["url"];
 $mphomepage = (string)$parl_data->homePage ;
 $mpparty = $twfy_data["party"];
 
-echo "<fieldset><legend>Your MP info</legend>";
-echo "<p>$mptitle $mpfirstname $mpsecondname $mpparty</p>";
+echo "<fieldset>";
 
 if(empty($mptwitter)){
-    //echo "<h2>Send your MP a tweet</h2><p>Your MP doesn't have a twitter account listed :(.</p>";
+    echo "<legend>Your MP info</legend>";
+    echo "<p>$mptitle $mpfirstname $mpsecondname, $mpparty, $constituency_name</p>";
     echo "<p>Your MP doesn't have a Twitter account.</p>"; 
     echo "<p><a href=\"https://www.dontspyonus.org.uk/email-your-mp\" target=\"_blank\">Email your MP</a> instead!</p>";
 } else {
-    //echo "<h2>Send your MP a tweet</h2>";
+    echo "<legend>Send your MP a tweet</legend>";
+    echo "<p>$mptitle $mpfirstname $mpsecondname, $mpparty, $constituency_name</p>";
     echo "<a href=\"https://twitter.com/intent/tweet?screen_name=$mptwitter\" class=\"twitter-mention-button\" data-text=\"Put default tweet in here\" data-hashtags=\"IPBill\" data-lang=\"en\" data-size=\"large\">Tweet your MP</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=\"https://platform.twitter.com/widgets.js\";fjs.parentNode.insertBefore(js,fjs);}}(document,\"script\",\"twitter-wjs\");</script>";
 }
 
@@ -175,10 +176,10 @@ if(empty($mptwitter)){
 //	<p>You can also call your MP at $mpphone</p>";	
 //	}
 	
-// end of MP details
-	
-echo '</fieldset><p><a href="index.html">Start again</a>';
+// end of MP details	
+echo "</fieldset>";
 
+echo "<p><a href="index.html">Start again</a></p>";
 
 // footer as defined in actionsettings.php
 
