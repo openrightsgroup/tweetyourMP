@@ -71,6 +71,9 @@ $sReplace = '';
 
 $senderpostcode2 = preg_replace( $sPattern, $sReplace, $senderpostcode );
 
+// limit the postcode we send to the API to ten chars
+$senderpostcode2 = substr($senderpostcode2, 0, 10);
+
 // send the query to theyworkforyou.com (twfy)
 
  
@@ -109,7 +112,7 @@ if (empty($constituency_name)) {
 // for debugging the TWFY output
 // echo $mps;
 
-echo '<script language="javascript" type="text/javascript">alert("Sorry we can\'t find a constituency for that postcode - please try again"); history.back();</script>';
+echo '<script language="javascript" type="text/javascript">alert("Sorry we can\'t find a constituency for that postcode - please try again"); history.go(-1);</script>';
 exit(); //and stop running the script
 }
 
