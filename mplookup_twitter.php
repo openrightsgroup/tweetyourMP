@@ -179,7 +179,7 @@ if(empty($mptwitter)){
 // end of MP details	
 echo "</fieldset>";
 
-echo "<p><a href="index.html">Start again</a></p>";
+echo "<p><a href=\"index.html\">Start again</a></p>";
 
 // footer as defined in actionsettings.php
 
