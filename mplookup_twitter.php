@@ -120,7 +120,7 @@ else {
 // just carry on 
 }		
 
-echo "<h2>Your constituency is $constituency_name </h2>";
+//echo "<h2>Your constituency is $constituency_name </h2>";
 
 // now to lookup the MP's details from the database
 
@@ -133,37 +133,33 @@ $twfypage = "http://www.theyworkforyou.com" . $twfy_data["url"];
 $mphomepage = (string)$parl_data->homePage ;
 $mpparty = $twfy_data["party"];
 
-echo "<fieldset><legend>Your MP info</legend>";
-echo "<p>$mptitle $mpfirstname $mpsecondname $mpparty</p>";
+//echo "<fieldset><legend>Your MP info</legend>";
+//echo "<p>$mptitle $mpfirstname $mpsecondname $mpparty</p>";
 
 if(empty($mptwitter)){
-
-	echo "<h2>Send your MP a tweet</h2>
-	<p>Your MP doesn't have a twitter account listed :(.</p>"; }
-	
-else {
-
-
-echo "<h2>Send your MP a tweet</h2>";
-echo "<a href=\"https://twitter.com/intent/tweet?screen_name=$mptwitter\" class=\"twitter-mention-button\" data-hashtags=\"tweetyourMP\" data-lang=\"en\" data-size=\"large\">Tweet your MP</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=\"https://platform.twitter.com/widgets.js\";fjs.parentNode.insertBefore(js,fjs);}}(document,\"script\",\"twitter-wjs\");</script>";
-	}
+    //echo "<h2>Send your MP a tweet</h2><p>Your MP doesn't have a twitter account listed :(.</p>";
+    echo "<p>Your MP doesn't have a Twitter account.</p>"; 
+    echo "<p><a href=\"https://www.dontspyonus.org.uk/email-your-mp\" target=\"_blank\">Email your MP</a> instead!</p>";
+} else {
+    //echo "<h2>Send your MP a tweet</h2>";
+    echo "<a href=\"https://twitter.com/intent/tweet?screen_name=$mptwitter\" class=\"twitter-mention-button\" data-text=\"Put default tweet in here\" data-hashtags=\"IPBill\" data-lang=\"en\" data-size=\"large\">Tweet your MP</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=\"https://platform.twitter.com/widgets.js\";fjs.parentNode.insertBefore(js,fjs);}}(document,\"script\",\"twitter-wjs\");</script>";
+}
 
 // leave a comment on your MP's website
-
-if(empty($mphomepage)){
-
-	echo "<h2>Leave a comment on your MP's website</h2>
-	<p>Your MP doesn't have a website listed :(.</p>
-	<p>You could try sending them a message through <A href=\"$twfypage\" target=\"_blank\">TheyWorkForYou.com</a>"; }
-	
-else {
-
-	echo "<h2>Leave a comment on your MP's website</h2>
-	<p>Your MP has a site listed at <a href='$mphomepage' target='_blank'>$mphomepage</a></p>
-	<p>You can also send them a message through <A href=\"$twfypage\" target='_blank'>TheyWorkForYou.com</a>";
-		
-	}
+//
+//if(empty($mphomepage)){
+//
+//	echo "<h2>Leave a comment on your MP's website</h2>
+//	<p>Your MP doesn't have a website listed :(.</p>
+//	<p>You could try sending them a message through <A href=\"$twfypage\" target=\"_blank\">TheyWorkForYou.com</a>"; }
+//	
+//else {
+//
+//	echo "<h2>Leave a comment on your MP's website</h2>
+//	<p>Your MP has a site listed at <a href='$mphomepage' target='_blank'>$mphomepage</a></p>
+//	<p>You can also send them a message through <A href=\"$twfypage\" target='_blank'>TheyWorkForYou.com</a>";
+//		
+//	}
 	
 // add other contact options here - phone as an example, could add email or post here.
 	
@@ -176,8 +172,7 @@ else {
 // phone your MP
 
 //echo "<h2>Phone your MP</h2>
-//	<p>You can also call your MP at $mpphone</p>";
-	
+//	<p>You can also call your MP at $mpphone</p>";	
 //	}
 	
 // end of MP details
