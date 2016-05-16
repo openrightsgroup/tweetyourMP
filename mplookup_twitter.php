@@ -133,8 +133,8 @@ $twfypage = "http://www.theyworkforyou.com" . $twfy_data["url"];
 $mphomepage = (string)$parl_data->homePage ;
 $mpparty = $twfy_data["party"];
 
-//echo "<fieldset><legend>Your MP info</legend>";
-//echo "<p>$mptitle $mpfirstname $mpsecondname $mpparty</p>";
+echo "<fieldset><legend>Your MP info</legend>";
+echo "<p>$mptitle $mpfirstname $mpsecondname $mpparty</p>";
 
 if(empty($mptwitter)){
     //echo "<h2>Send your MP a tweet</h2><p>Your MP doesn't have a twitter account listed :(.</p>";
