@@ -1,8 +1,8 @@
 @charset "UTF-8";
 
 /*importing dsou stylesheets for development*/
-/*@import url('https://www.dontspyonus.org.uk/assets/site/dontspyonus/css/bootstrap.css')*/
-/*@import url('https://www.dontspyonus.org.uk/assets/site/dontspyonus/css/style.css');*/
+@import url('https://www.dontspyonus.org.uk/assets/site/dontspyonus/css/bootstrap.css');
+@import url('https://www.dontspyonus.org.uk/assets/site/dontspyonus/css/style.css');
 
 body {
     margin: 0;
