@@ -44,6 +44,8 @@
 // 
 // I've included a stylesheet to make the MP action look a bit neater
 
+header('Cache-Control: private');
+
 include 'settings.php';
 
 
