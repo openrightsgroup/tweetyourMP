@@ -85,9 +85,10 @@ $mps = $twfyapi->query('getMP', array('output' => 'php', 'postcode' => $senderpo
 // by sorting out the array - but it works. Will try and make it better later.
 
 $twfy_data = unserialize($mps);
-$constituency_name = $twfy_data["constituency"];
 
-$mpfullname = $twfy_data["full_name"];
+$constituency_name = $twfy_data["constituency"];
+$mp_given_name = $twfy_data["given_name"];
+$mp_family_name = $twfy_data["family_name"];
 
 ## TODO make this a proper function
 ## API details here http://explore.data.parliament.uk/?learnmore=Members
@@ -95,7 +96,7 @@ $parl = curl_init();
 curl_setopt($parl, CURLOPT_USERAGENT, 'https://github.com/openrightsgroup/tweetyourMP');
 curl_setopt($parl, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($parl, CURLOPT_FOLLOWLOCATION, true);
-$url = "http://lda.data.parliament.uk/members.json" . "?fullName=" . urlencode($mpfullname);
+$url = "http://lda.data.parliament.uk/members.json" . "?" . "familyName=" . urlencode($mp_family_name) . "&" . "givenName=" . urlencode($mp_given_name);
 curl_setopt($parl, CURLOPT_URL, $url);
 $result = curl_exec($parl);
 $parl_data = json_decode($result)->result->items[0];
@@ -129,8 +130,6 @@ else {
 // and to turn those results into lovely strings
 
 $mptitle = "";
-$mpfirstname = $twfy_data["given_name"];
-$mpsecondname = $twfy_data["family_name"];
 $twfypage = "http://www.theyworkforyou.com" . $twfy_data["url"];
 $mphomepage = (string)$parl_data->homePage ;
 $mpparty = $twfy_data["party"];
@@ -139,12 +138,12 @@ echo "<fieldset>";
 
 if(empty($mptwitter)){
     echo "<legend>Your MP info</legend>";
-    echo "<p>$mptitle $mpfirstname $mpsecondname, $mpparty, $constituency_name</p>";
+    echo "<p>$mptitle $mp_given_name $mp_family_name, $mpparty, $constituency_name</p>";
     echo "<p>Your MP doesn't have a Twitter account.</p>"; 
     echo "<p><a href=\"https://www.dontspyonus.org.uk/email-your-mp\" target=\"_blank\">Email your MP</a> instead!</p>";
 } else {
     echo "<legend>Send your MP a tweet</legend>";
-    echo "<p>$mptitle $mpfirstname $mpsecondname, $mpparty, $constituency_name</p>";
+    echo "<p>$mptitle $mp_given_name $mp_family_name, $mpparty, $constituency_name</p>";
     echo "<a href=\"https://twitter.com/intent/tweet?screen_name=$mptwitter\" class=\"twitter-mention-button\" data-text=\"Put default tweet in here\" data-hashtags=\"IPBill\" data-lang=\"en\" data-size=\"large\">Tweet your MP</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=\"https://platform.twitter.com/widgets.js\";fjs.parentNode.insertBefore(js,fjs);}}(document,\"script\",\"twitter-wjs\");</script>";
 }
 
